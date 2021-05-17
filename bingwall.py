@@ -20,6 +20,21 @@ def get_url(num):
 @listener(is_plugin=True, outgoing=True, command="bingwall",
           description="获取Bing每日壁纸")    
 async def bingwall(context):
+    try:
+        if len(context.parameter) >= 1:
+            if context.parameter[0][0].lower()=="y":
+                as_file=True
+            elif context.parameter[0][0].lower()=="n":
+                as_file=False
+            elif not context.parameter[0]:
+                as_file=False
+            else:
+                raise IndexError
+        else:
+            as_file=False
+    except:
+        await context.edit("出错了呜呜呜 ~ 无效的参数。")
+        return
     await context.edit("获取壁纸中 . . .")
     status = False    
     for _ in range (20): #最多重试20次
@@ -35,7 +50,7 @@ async def bingwall(context):
                 with open(filename, 'wb') as f:
                     f.write(img.content)
                 await context.edit("上传中 . . .")
-                await context.client.send_file(context.chat_id,filename,caption = f"#bing wallpaper\n{str(copyright)}")
+                await context.client.send_file(context.chat_id,filename, force_document=as_file, caption = f"#bing [wallpaper]({image_url})\n{str(copyright)}")
                 status = True
                 break #成功了就赶紧结束啦！
         except:
