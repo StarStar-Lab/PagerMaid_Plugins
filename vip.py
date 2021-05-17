@@ -12,7 +12,7 @@ async def weather(message, args, origin_text):
     except ValueError:
         await message.edit("出错了呜呜呜 ~ 无效的参数。")
         return
-    await bot.send_message('PagerMaid_Modify_bot', f'/weather {msg}')
+    await bot.send_message('PagerMaid_Modify_bot', f'/weather_api {msg}')
     await sleep(5)
     await bot.read_history('PagerMaid_Modify_bot')
     async for msg in bot.iter_history('PagerMaid_Modify_bot', limit=1):
