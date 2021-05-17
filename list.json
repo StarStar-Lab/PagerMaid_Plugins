@@ -471,7 +471,7 @@
             "des": "命令：diy ['sao', 'qh', 'zn', 'tg', 'ba', 'gs']"
         },
         {
-            "name": "bing",
+            "name": "bingwall",
             "version": "1.0",
             "section": "chat",
             "maintainer": "ahhhiiii",
