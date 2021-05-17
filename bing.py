@@ -15,6 +15,8 @@ def get_url(num):
         url = data['images'][0]['url']
         copyright = data['images'][0]['copyright']
     return url, copyright
+
+
 @listener(is_plugin=True, outgoing=True, command="bing",
           description="获取Bing每日壁纸")    
 async def bing(context):
@@ -29,8 +31,6 @@ async def bing(context):
         try:
             if website == 0 and image_url != " ":
                 img = get(image_url)
-            else: 
-                await context.edit("无法访问API，呜呜呜 . . .")
             if img.status_code == 200:
                 with open(filename, 'wb') as f:
                     f.write(img.content)
