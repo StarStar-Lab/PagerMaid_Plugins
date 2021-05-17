@@ -469,7 +469,7 @@
             "supported": true,
             "des-short": "api 聚合",
             "des": "命令：diy ['sao', 'qh', 'zn', 'tg', 'ba', 'gs']"
-        }
+        },
         {
             "name": "bing",
             "version": "1.0",
