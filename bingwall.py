@@ -17,9 +17,9 @@ def get_url(num):
     return url, copyright
 
 
-@listener(is_plugin=True, outgoing=True, command="bing",
+@listener(is_plugin=True, outgoing=True, command="bingwall",
           description="获取Bing每日壁纸")    
-async def bing(context):
+async def bingwall(context):
     await context.edit("获取壁纸中 . . .")
     status = False    
     for _ in range (20): #最多重试20次
