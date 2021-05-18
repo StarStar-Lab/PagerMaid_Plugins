@@ -7,28 +7,22 @@ from pagermaid.listener import listener
 
 def get_api(num):
     api = ['https://api.ghser.com/saohua/?type=json',
-           'https://api.lovelive.tools/api/SweetNothings/?type=json',
-           f'https://api.lovelive.tools/api/SweetNothing/Keyword/{randint(1, 20)}',
+           'https://api.ghser.com/qinghua/?type=json',
            'https://api.muxiaoguo.cn/api/tiangourj',
            'https://xiaojieapi.com/api/v1/get/security',
            'https://api.muxiaoguo.cn/api/Gushici'
            ]
-    name = ['骚话', '情话', '渣男语录', '舔狗语录', '保安日记', '古诗词']
+    name = ['骚话', '情话', '舔狗语录', '保安日记', '古诗词']
     return api[num], name[num]
 
 
 def process_web_data(num, req):
     data = json.loads(req.text)
-    if num == 0:
+    if num == 0 or num == 1:
         res = data['ishan']
-    elif num == 1 or num == 2:
-        if len(data['returnObj']) == 0:
-            res = "出错了呜呜呜 ~ API 服务器 返回了空数据。"
-        else:
-            res = choice(data['returnObj'])
-    elif num == 3:
+    elif num == 2:
         res = data['data']['comment']
-    elif num == 4:
+    elif num == 3:
         res = f"{data['date']} {data['week']} {data['weather']}\n{data['msg']}"
     else:
         poet = data['data']['Poet']
@@ -41,7 +35,7 @@ def process_web_data(num, req):
 @listener(is_plugin=True, outgoing=True, command="diy",
           description="多个随机api。")
 async def diy(context):
-    short_name = ['sao', 'qh', 'zn', 'tg', 'ba', 'gs']
+    short_name = ['sao', 'qh', 'tg', 'ba', 'gs']
     try:
         if not len(context.parameter) == 0:
             api = context.parameter[0]
@@ -51,22 +45,22 @@ async def diy(context):
                 text = "正在编" + name
             else:
                 await context.edit("正在掷🎲 . . .")
-                num = randint(0, 5)
+                num = randint(0, 4)
                 api_url, name = get_api(num)
                 text = f"🎲点数为 `{str(num + 1)}` 正在编{name}"
         else:
             await context.edit("正在掷🎲 . . .")
-            num = randint(0, 5)
+            num = randint(0, 4)
             api_url, name = get_api(num)
             text = f"🎲点数为 `{str(num + 1)}` 正在编{name}"
     except:
         await context.edit("正在掷🎲 . . .")
-        num = randint(0, 5)
+        num = randint(0, 4)
         api_url, name = get_api(num)
         text = f"🎲点数为 `{str(num + 1)}` 正在编{name}"
     await context.edit(text)
     status = False
-    for _ in range(20):  # 最多尝试20次
+    for _ in range(10):  # 最多尝试10次
         req = get(api_url)
         if req.status_code == 200:
             try:
